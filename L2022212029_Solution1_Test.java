@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Solution1Test {
+public class L2022212029_Solution1_Test {
 
     private final Solution1 solution = new Solution1();
 
