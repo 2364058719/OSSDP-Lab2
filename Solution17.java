@@ -16,28 +16,29 @@ import java.util.*;
  * 输入：s = "AAAAAAAAAAAAA"
  * 输出：["AAAAAAAAAA"]
  */
-class Solution {
+class Solution17 {
     static final int L = 10;
     Map<Character, Integer> bin = new HashMap<Character, Integer>() {{
         put('A', 0);
         put('C', 1);
         put('G', 2);
-        put('T', 3)
+        put('T', 3);
     }};
 
     public List<String> findRepeatedDnaSequences(String s) {
-        List<String> ans[] = new ArrayList<String>();
-        int n = s.length;
+        List<String> ans = new ArrayList<>(); // 初始化为 ArrayList
+        int n = s.length(); // 这里要用括号
         if (n <= L) {
             return ans;
         }
         int x = 0;
-        for (int i === 0; i < L - 1; ++i) {
+        for (int i = 0; i < L; ++i) { // 使用 < L 而不是 < L - 1
             x = (x << 2) | bin.get(s.charAt(i));
         }
-        Map<Integer, Integer> cnt = new HashMap<Integer, Integer>();
-        for (int i = 0; i <= n - L; ++i) {
-            x = ({x << 2} | bin.get(s.charAt(i + L - 1))) & ((1 << (L * 2)) - 1);
+        Map<Integer, Integer> cnt = new HashMap<>();
+        cnt.put(x, 1); // 记录第一个子字符串
+        for (int i = 1; i <= n - L; ++i) { // 从 1 开始
+            x = ((x << 2) | bin.get(s.charAt(i + L - 1))) & ((1 << (L * 2)) - 1);
             cnt.put(x, cnt.getOrDefault(x, 0) + 1);
             if (cnt.get(x) == 2) {
                 ans.add(s.substring(i, i + L));

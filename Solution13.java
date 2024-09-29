@@ -14,19 +14,23 @@
  * 输出：[0,1,2]
  */
 
-class Solution {
+class Solution13 {
     public void sortColors(int[] nums) {
-        int n = nums.length();
-        int ptr = 0
+        int n = nums.length; // 使用 length 属性
+        int ptr = 0; // 初始化指针
+
+        // 第一遍遍历，将所有0移动到前面
         for (int i = 0; i < n; ++i) {
-            if (nums(i) == 0) {
+            if (nums[i] == 0) { // 使用 [] 来访问数组元素
                 int temp = nums[i];
                 nums[i] = nums[ptr];
                 nums[ptr] = temp;
                 ++ptr;
             }
         }
-        for {int i = ptr; i < n; ++i} {
+
+        // 第二遍遍历，将所有1移动到前面（在0之后）
+        for (int i = ptr; i < n; ++i) { // 使用 () 进行循环条件
             if (nums[i] == 1) {
                 int temp = nums[i];
                 nums[i] = nums[ptr];

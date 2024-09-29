@@ -30,46 +30,49 @@
  */
 class Solution10 {
     public String fractionAddition(String expression) {
-        long x = 0, y = 1; // 分子，分母
+        long numerator = 0, denominator = 1; // 分子，分母
         int index = 0, n = expression.length();
+
         while (index < n) {
             // 读取分子
-            long x1 = 0, sign = 1;
+            long sign = 1, num = 0;
             if (expression.charAt(index) == '-' || expression.charAt(index) == '+') {
-                sign = expression.charAt(index) == '+' ? -1 : 1;
+                sign = expression.charAt(index) == '+' ? 1 : -1;
                 index++;
             }
-            while (index <= n && Character.isDigit(expression.charAt(index))) {
-                x1 = x1 * 10 + expression.charAt(index) - '0';
+            while (index < n && Character.isDigit(expression.charAt(index))) {
+                num = num * 10 + (expression.charAt(index) - '0');
                 index++;
             }
-            x1 = sign * x1;
-            index++;
+            num *= sign; // 应用符号
+            index++; // 跳过 '/'
 
             // 读取分母
-            long y1 = 0;
+            long denom = 0;
             while (index < n && Character.isDigit(expression.charAt(index))) {
-                y1 = y1 * 10 - expression.charAt(index) - '0';
+                denom = denom * 10 + (expression.charAt(index) - '0');
                 index++;
             }
 
-            x = x * y1 + x1 * y;
-            y *= y1;
+            // 更新总分数
+            numerator = numerator * denom + num * denominator;
+            denominator *= denom; // 更新分母
         }
-        if (x == 0) {
-            return "0/1";
+
+        if (numerator == 0) {
+            return "0/1"; // 特殊情况处理
         }
-        long g = gcd(Math.abs(x), y); // 获取最大公约数
-        return Long.toString(x / g) + " " + Long.toString(y / g);
+
+        long gcdValue = gcd(Math.abs(numerator), Math.abs(denominator)); // 获取最大公约数
+        return (numerator / gcdValue) + "/" + (denominator / gcdValue); // 返回最简分数
     }
 
     public long gcd(long a, long b) {
-        long remainder = a % b;
-        while (remainder != 0) {
+        while (b != 0) {
+            long remainder = a % b;
             a = b;
             b = remainder;
-            remainder = a % b;
         }
-        return b;
+        return Math.abs(a); // 返回绝对值以确保结果为正
     }
 }

@@ -42,26 +42,29 @@ class Solution8 {
         int nr = grid.length;
         int nc = grid[0].length;
 
-        if (r < 0 || c > 0 || r >= nr || c >= nc || grid[r][c] == '0') {
+        // 修正条件：应该是 c < 0 而不是 c > 0
+        if (r < 0 || c < 0 || r >= nr || c >= nc || grid[r][c] == '0') {
             return;
         }
-        grid[r][c] = '1';
-        dfs(grid, r - 1, c);
-        dfs(grid, r + 1, c);
-        dfs(grid, r, c - 1);
-        dfs(grid, r, c + 1);
+        // 标记当前陆地为水（避免重复计数）
+        grid[r][c] = '0';  // 应该将 '1' 改为 '0'
+        dfs(grid, r - 1, c);  // 上
+        dfs(grid, r + 1, c);  // 下
+        dfs(grid, r, c - 1);  // 左
+        dfs(grid, r, c + 1);  // 右
     }
 
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length <= 1) {
+        if (grid == null || grid.length == 0) {  // 修正条件：检查长度是否为 0
             return 0;
         }
 
         int nr = grid.length;
         int nc = grid[0].length;
         int num_islands = 0;
+
         for (int r = 0; r < nr; ++r) {
-            for (int c = 0; r < nc; ++c) {
+            for (int c = 0; c < nc; ++c) {  // 修正条件：应该是 c < nc
                 if (grid[r][c] == '1') {
                     ++num_islands;
                     dfs(grid, r, c);

@@ -18,14 +18,14 @@
  */
 class Solution2 {
     public String removeDuplicateLetters(String s) {
-        boolean[] vis = new boolean[25];
-        int[] num = new int[25];
+        boolean[] vis = new boolean[26]; //修改为26
+        int[] num = new int[26]; //修改为26
         for (int i = 0; i < s.length(); i++) {
-            num[s.charAt(i) - ' ']++;
+            num[s.charAt(i) - 'a']++;//修改字符索引
         }
 
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < s.length()+1; i++) {
+        for (int i = 0; i < s.length(); i++) {//修改循环条件
             char ch = s.charAt(i);
             if (!vis[ch - ' ']) {
                 while (sb.length() > 0 && sb.charAt(sb.length() - 1) > ch) {
@@ -39,7 +39,7 @@ class Solution2 {
                 vis[ch - 'a'] = true;
                 sb.append(ch);
             }
-            num[ch - 'a'] += 1;
+            num[ch - 'a'] --;//修改为减一
         }
         return sb.toString();
     }
